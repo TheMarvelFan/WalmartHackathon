@@ -20,7 +20,7 @@ def sorted_nearest_neighbor(locations, depot):
 
 try:
     # Read dataset from CSV
-    df = pd.read_csv('D:\git projects\WalmartHackathon\input_datasets\part_a\part_a_input_dataset_3.csv')
+    df = pd.read_csv('D:\git projects\walmart-sct-hackathon-round-1\input_datasets\part_a\part_a_input_dataset_2.csv')
 
     # Extracting locations and depot coordinates
     locations = list(zip(df['lat'], df['lng']))
@@ -40,7 +40,7 @@ try:
     output_df['dlvr_seq_num'] = range(1, len(output_df) + 1)
 
     # Write output to CSV file
-    output_df.to_csv('D:\git projects\WalmartHackathon\output_datasets\part_a\part_a_output_dataset_3.csv', index=False)
+    output_df.to_csv('D:\git projects\walmart-sct-hackathon-round-1\output_datasets\part_a\part_a_output_dataset_2.csv', index=False)
 
     print("Output saved to output.csv")
 

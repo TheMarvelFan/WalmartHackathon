@@ -17,7 +17,7 @@ def tsp_brute_force(locations, depot):
     return best_route, best_distance
 
 # Read dataset from CSV
-df = pd.read_csv('D:\git projects\WalmartHackathon\input_datasets\part_a\part_a_input_dataset_1.csv')
+df = pd.read_csv('D:\git projects\walmart-sct-hackathon-round-1\input_datasets\part_a\part_a_input_dataset_1.csv')
 
 # Extracting locations and depot coordinates
 locations = [(row['lat'], row['lng']) for _, row in df.iterrows()]
@@ -36,6 +36,6 @@ output_df['total_distance_from_depot'] = output_df['distance_from_previous'].cum
 output_df['dlvr_seq_num'] = range(1, len(output_df) + 1)
 
 # Write output to CSV file
-output_df.to_csv('D:\git projects\WalmartHackathon\output_datasets\part_a\part_a_output_dataset_1.csv', index=False)
+output_df.to_csv('D:\git projects\walmart-sct-hackathon-round-1\output_datasets\part_a\part_a_output_dataset_1.csv', index=False)
 
 print("Output written to part_a_output_dataset_1.csv")
