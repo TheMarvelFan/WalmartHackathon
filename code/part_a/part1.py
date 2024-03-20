@@ -36,6 +36,6 @@ output_df['total_distance_from_depot'] = output_df['distance_from_previous'].cum
 output_df['dlvr_seq_num'] = range(1, len(output_df) + 1)
 
 # Write output to CSV file
-output_df.to_csv('D:\git projects\WalmartHackathon\output_datasets\part_a\part_b_best_routes_distance_travelled.csv', index=False)
+output_df.to_csv('D:\git projects\WalmartHackathon\output_datasets\part_a\part_a_output_dataset_1.csv', index=False)
 
-print("Output written to part_b_best_routes_distance_travelled.csv")
+print("Output written to part_a_output_dataset_1.csv")
