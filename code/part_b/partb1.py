@@ -31,18 +31,30 @@ def assign_orders_to_vehicles(order_data, vehicle_capacity):
 # Function to generate delivery routes for each vehicle
 def generate_delivery_routes(order_data, vehicles_routes):
     depot_lat, depot_lon = order_data.iloc[0]['depot_lat'], order_data.iloc[0]['depot_lng']
-    delivery_routes = []
+    total_distance = 0
     for vehicle_index, orders in enumerate(vehicles_routes, start=1):
         route = ['depot'] + orders + ['depot']  # Route starts and ends at depot
         route_coords = [(depot_lat, depot_lon)] + [(order_data.loc[order_data['order_id'] == order]['lat'].values[0],
                                                     order_data.loc[order_data['order_id'] == order]['lng'].values[0]) for order in orders] + [(depot_lat, depot_lon)]
         route_distances = [calculate_distance(route_coords[i][0], route_coords[i][1], route_coords[i+1][0], route_coords[i+1][1]) for i in range(len(route_coords)-1)]
+        total_distance += sum(route_distances)
+    return total_distance
+def generate_delivery_routes_final(order_data, vehicles_routes):
+    depot_lat, depot_lon = order_data.iloc[0]['depot_lat'], order_data.iloc[0]['depot_lng']
+    delivery_routes = []
+    for vehicle_index, orders in enumerate(vehicles_routes, start=1):
+        route = ['depot'] + orders + ['depot']  # Route starts and ends at depot
+        route_coords = [(depot_lat, depot_lon)] + [(order_data.loc[order_data['order_id'] == order]['lat'].values[0],
+                                                      order_data.loc[order_data['order_id'] == order]['lng'].values[0]) for order in orders] + [(depot_lat, depot_lon)]
+        route_distances = [calculate_distance(route_coords[i][0], route_coords[i][1], route_coords[i+1][0], route_coords[i+1][1]) for i in range(len(route_coords)-1)]
         total_distance = sum(route_distances)
         delivery_routes.extend([(order, *coords, depot_lat, depot_lon, vehicle_index, seq_num) for order, coords, seq_num in zip(orders, route_coords[1:], range(1, len(orders)+1))])
     return delivery_routes
+        
+
 
 # Read input data from CSV
-input_file = "input_datasets\part_b\part_b_input_dataset_1.csv"
+input_file = "input_datasets/part_b/part_b_input_dataset_1.csv"
 order_data = pd.read_csv(input_file)
 
 # Parameters
@@ -51,10 +63,13 @@ vehicle_capacity = 20  # Maximum number of orders each vehicle can deliver
 # Assign orders to vehicles
 vehicles_routes = assign_orders_to_vehicles(order_data, vehicle_capacity)
 
+# Calculate total distance traveled
+total_distance = generate_delivery_routes(order_data, vehicles_routes)
+
 # Generate delivery routes for each vehicle
-delivery_routes = generate_delivery_routes(order_data, vehicles_routes)
+delivery_routes = generate_delivery_routes_final(order_data, vehicles_routes)
 
 # Write output to CSV
 output_columns = ['order_id', 'lng', 'lat', 'depot_lat', 'depot_lng', 'vehicle_num', 'dlvr_seq_num']
 output_data = pd.DataFrame(delivery_routes, columns=output_columns)
-output_data.to_csv('output.csv', index=False)
+output_data.to_csv('C:\Users\harsh\walmart-sct-hackathon-round-1\output_datasets\part_b\part_b_output_dataset_1.csv', index=False)
